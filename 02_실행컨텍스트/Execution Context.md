@@ -12,7 +12,7 @@
 
 
 2. 콜 스택
-
+   ```js
    function a()
    {
       console.log(1);
@@ -23,6 +23,7 @@
    }
    a();
    b();
+   ```
 
    - 위처럼 함수가 실행될 경우
                                     function b
@@ -34,8 +35,6 @@
       - Lexical Environment : 처음에는 Lexical Environment와 같지만 변경 사항이 실시간으로 반영됨
       - ThisBinding : 식별자가 바라봐야 할 대상 객체
 
-
-
 3. environmentRecord와 호이스팅
    1. 현재 컨텍스트와 관련된 코드의 식별자 정보들이 저장됨
    2. 컨텍스트 내부 전체를 처음부터 끝까지 순서대로 수집
@@ -44,7 +43,7 @@
     - 끌어올리다는 의미의 host + ing
 
    4. 매개변수와 변수에 대한 호이스팅
-
+   ```js
    function test1(x) { // 수집 대상 1 - 매개변수
       console.log(x);
       var x;
@@ -53,11 +52,18 @@
       console.log(x); // 수집 대상 3 변수선언
    }
    test1(1);
-
-   결과값은?
-
-
-
+   ```
+   <details>
+   <summary>결과</summary>
+   
+   ```
+   1
+   1
+   2
+   ```
+   
+   </details>
+   ```js
    function test2() { // 수집 대상 1 - 매개변수
       var x = 1;
       console.log(x);
@@ -67,10 +73,18 @@
       console.log(x); // 수집 대상 3 변수선언
    }
    test2();
-
-   결과값은?
-
-
+   ```
+   <details>
+   <summary>결과</summary>
+   
+   ```
+   1
+   1
+   2
+   ```
+   
+   </details>
+   ```js
    function test3() {
       var x; // 수집 대상 1 의 변수 선언 부분
       var x; // 수집 대상 2 의 변수 선언 부분
@@ -83,10 +97,18 @@
       console.log(x);
    }
    test3(1);
-
-   결과값은?
-
-
+   ```
+   <details>
+   <summary>결과</summary>
+   
+   ```
+   1
+   1
+   2
+   ```
+   
+   </details>
+   ```js
    function test4() {
       console.log(b);
       var b = 'bbb';
@@ -96,24 +118,39 @@
       console.log(b);
    }
    test4();
-
-   결과값은?
-
-
+   ```
+   <details>
+   <summary>결과</summary>
+   
+   ```
+   ƒ b () {}
+   bbb
+   bbb
+   ```
+   
+   </details>
 
 4. 함수를 정의하는 세 가지 방식
    - 함수 선언문 함수명 a가 곧 변수명
-   ex) function a () {}  a(); // 실행 ok
+   ex) 
+   ```js
+   function a () {}  a(); // 실행 ok 
+   ```
 
    - 변수명 b가 곧 함수명
-   ex) var b = function () {} b(); // 실행 ok
+   ex) 
+   ```js
+   var b = function () {} b(); // 실행 ok
+   ```
 
    - 기명 함수 표현식 c는 변수명 d는 함수명
-   ex) var c = function d () {} c(); // 실행 ok d(); // 에러
-
-
+   ex) 
+   ```js
+   var c = function d () {} c(); // 실행 ok d(); // 에러
+   ````
 
 5. 함수 선언문의 위험성
+   ```js
    console.log(sum(3,4));
 
    function sum(x, y) {
@@ -128,11 +165,11 @@
 
    var c = sum(1, 2);
    console.log(c);
-
+   ```
    결과값은?
 
    상대적으로 함수 표현식이 안전하다.
-
+   ```js
    console.log(sum(3, 4));
 
    var sum = function (x, y){
@@ -147,7 +184,7 @@
 
    var c = sum(1, 2);
    console.log(c);
-
+   ```
    결과값은?
 
 
@@ -157,7 +194,7 @@
    - 전역공간을 제외하면 함수에 의해서만 스코프가 생성 (es5까지)
    - 식별자의 유효범위를 안에서 밖으로 차례로 검색하는것을 스코프 체인이라고 한다.
    - 무조건 스코프 체인 상에서 가장 먼저 발견된 식별자에만 접근 가능
-   
+   ```js
    var a = 1;
    var outer = function () {
       var inner = function () {
@@ -169,7 +206,7 @@
    };
    outer();
    console.log(a);
-
+   ```
    결과값은? 
 
    전역  -> outer -> inner
